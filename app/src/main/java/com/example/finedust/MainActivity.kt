@@ -11,6 +11,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     private var cancellationTokenSource : CancellationTokenSource ? =null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    private val scope = MainScope()
+
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -35,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
 
         cancellationTokenSource?.cancel()
+        scope.cancel()
     }
 
     @SuppressLint("MissingPermission")
@@ -53,20 +60,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         }else{
             // fetchData
-
-                cancellationTokenSource = CancellationTokenSource()
-
-
-            fusedLocationProviderClient.getCurrentLocation(
-                //high accuracy 는 정확도는 높지만 배터리를 많이 먹음
-                // 여기서는 어차피 한번만 요청 하므로 그냥 씀
-                LocationRequest.PRIORITY_HIGH_ACCURACY,
-                cancellationTokenSource!!.token
-
-                ).addOnSuccessListener { location ->
-                    binding.textview.text = "${location.latitude} , ${location.longitude}"
-            }
-
+            fetchAirQualityData()
         }
     }
 
@@ -85,6 +79,23 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    @SuppressLint("MissingPermission")
+    private fun fetchAirQualityData(){
+        cancellationTokenSource = CancellationTokenSource()
+
+
+        fusedLocationProviderClient.getCurrentLocation(
+            //high accuracy 는 정확도는 높지만 배터리를 많이 먹음
+            // 여기서는 어차피 한번만 요청 하므로 그냥 씀
+            LocationRequest.PRIORITY_HIGH_ACCURACY,
+            cancellationTokenSource!!.token
+
+        ).addOnSuccessListener { location ->
+            scope.launch {
+
+            }
+        }
+    }
 
     companion object {
         private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
