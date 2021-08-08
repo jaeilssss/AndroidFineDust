@@ -24,7 +24,6 @@ object Repository {
 
         val tmX = tmCoordinates?.x
         val tmY = tmCoordinates?.y
-
         return airKoreaApiService
             .getNearbyMonitoringStation(tmX!!, tmY!!)
             .body()
@@ -36,12 +35,10 @@ object Repository {
 
     }
     private val kakaoLocalApiService: KakaoLocalApiService by lazy {
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
+
         Retrofit.Builder()
             .baseUrl(Url.KAKAO_API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .client(buildHttpClient())
             .build()
             .create()
@@ -51,12 +48,9 @@ object Repository {
     }
 
     private val airKoreaApiService: AirKoreaApiService by lazy {
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
         Retrofit.Builder()
             .baseUrl(Url.AIR_KOREA_API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .client(buildHttpClient())
             .build()
             .create()

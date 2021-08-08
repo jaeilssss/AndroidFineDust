@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface AirKoreaApiService  {
 
 
-    @GET("B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?" +
+    @GET("B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList" +
             "?serviceKey=${BuildConfig.AIR_KOREA_SERVICE_KEY}"+
     "&returnType=json")
     suspend fun getNearbyMonitoringStation(
