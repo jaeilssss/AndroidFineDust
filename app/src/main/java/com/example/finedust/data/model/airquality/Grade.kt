@@ -1,6 +1,7 @@
 package com.example.finedust.data.model.airquality
 
 import androidx.annotation.ColorRes
+import com.example.finedust.R
 import com.google.gson.annotations.SerializedName
 
 enum class Grade(val label :String ,
@@ -9,13 +10,16 @@ enum class Grade(val label :String ,
                  ) {
 
     @SerializedName("1")
-    GOOD("좋음","☺️",),
+    GOOD("좋음","☺️",R.color.blue),
     @SerializedName("2")
-    NORMAL,
+    NORMAL("보통","🙂",R.color.green),
     @SerializedName("3")
-    BAD,
+    BAD("나쁨","☹️",R.color.yellow),
     @SerializedName("4")
-    AWFUL,
+    AWFUL("매우나쁨","😡",R.color.red),
 
-    UNKNOWN
-}
+    UNKNOWN("미측정","🧐",R.color.gray);
+
+    override fun toString(): String {
+        return "${label} ${emoji}"
+    }}
