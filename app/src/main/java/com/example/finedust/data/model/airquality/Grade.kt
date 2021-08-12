@@ -22,4 +22,6 @@ enum class Grade(val label :String ,
 
     override fun toString(): String {
         return "${label} ${emoji}"
-    }}
+    }
+
+}

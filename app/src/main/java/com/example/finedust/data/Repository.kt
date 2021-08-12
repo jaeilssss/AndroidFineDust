@@ -1,6 +1,7 @@
 package com.example.finedust.data
 
 import com.example.finedust.BuildConfig
+import com.example.finedust.data.model.airquality.MeasuredValue
 import com.example.finedust.data.model.monitoringstation.MonitoringStation
 import com.example.finedust.data.services.AirKoreaApiService
 import com.example.finedust.data.services.KakaoLocalApiService
@@ -34,6 +35,15 @@ object Repository {
 
 
     }
+
+    suspend fun getLatestAirQualityData(stationName : String): MeasuredValue? =
+            airKoreaApiService
+                    .getRealtimeAirQualities(stationName)
+                    .body()
+                    ?.response
+                    ?.body
+                    ?.measuredValues
+                    ?.firstOrNull()
     private val kakaoLocalApiService: KakaoLocalApiService by lazy {
 
         Retrofit.Builder()
@@ -58,6 +68,7 @@ object Repository {
         //클라이언트를 넣는 이유가 logging 을 추가하려구
 
     }
+
 
     private fun buildHttpClient():OkHttpClient =
         OkHttpClient.Builder()
