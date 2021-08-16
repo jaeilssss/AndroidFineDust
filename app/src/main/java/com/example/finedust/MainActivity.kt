@@ -3,9 +3,12 @@ package com.example.finedust
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.example.finedust.data.Repository
 import com.example.finedust.data.model.airquality.Grade
@@ -51,7 +54,8 @@ class MainActivity : AppCompatActivity() {
         scope.cancel()
     }
 
-    @SuppressLint("MissingPermission")
+
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -60,17 +64,49 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         val locationPermissionGranted =
-            requestCode == REQUEST_ACCESS_LOCATION_PERMISSIONS &&
-                    grantResults[0]==PackageManager.PERMISSION_GRANTED
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
-        if(!locationPermissionGranted){
-            finish()
-        }else{
-            // fetchData
-            fetchAirQualityData()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!locationPermissionGranted) {
+                finish()
+            } else {
+                val backgroundLocationPermissionGranted =
+                    ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                val shouldShowBackgroundPermissionRationale =
+                    shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+
+                if (!backgroundLocationPermissionGranted && shouldShowBackgroundPermissionRationale) {
+                    showBackgroundLocationPermissionRationaleDialog()
+                } else {
+                    fetchAirQualityData()
+                }
+            }
+        } else {
+            if (!locationPermissionGranted) {
+                finish()
+            } else {
+                fetchAirQualityData()
+            }
         }
     }
-
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun showBackgroundLocationPermissionRationaleDialog() {
+        AlertDialog.Builder(this)
+            .setMessage("홈 위젯을 사용하려면 위치 접근 권한이 ${packageManager.backgroundPermissionOptionLabel} 상태여야 합니다.")
+            .setPositiveButton("설정하기") { dialog, _ ->
+                requestBackgroundLocationPermissions()
+                dialog.dismiss()
+            }
+            .setNegativeButton("그냥두기") { dialog, _ ->
+                fetchAirQualityData()
+                dialog.dismiss()
+            }
+            .show()
+    }
     private fun initVariables(){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
     }
@@ -86,6 +122,14 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun requestBackgroundLocationPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+            REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS
+        )
+    }
     @SuppressLint("MissingPermission")
     private fun fetchAirQualityData(){
         cancellationTokenSource = CancellationTokenSource()
@@ -182,5 +226,7 @@ class MainActivity : AppCompatActivity() {
     }
     companion object {
         private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
+        private const val REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS = 101
+
     }
 }
