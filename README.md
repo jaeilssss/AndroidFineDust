@@ -1,7 +1,7 @@
 # AndroidFineDust
 
 
-프로젝트 명 : fineDust (미세먼지)
+## 우리동네 미세먼지
 ※ 본 프로젝트는 패스트 캠퍼스 안드로이드 강의를 참고하고 진행했습니다!
 
 <img width="366" alt="스크린샷 2021-08-16 오후 1 29 17" src="https://user-images.githubusercontent.com/59818827/129527170-e194ce7e-ab4c-4008-8a66-a9ac70992064.png">
@@ -9,21 +9,21 @@
  
 사용기술 : 
  
-LocationManager(FusedLocationProviderClient)
+1.LocationManager(FusedLocationProviderClient)
  
-Retrofit2
+2.Retrofit2
  
-Coroutine 
+3.Coroutine 
  
-App Widgets
+4.App Widgets
  
-공공 API
+5.공공 API
  
-한국환경공단_에어코리아_측정소정보API
++한국환경공단_에어코리아_측정소정보API
 
-한국환경공단_에어코리아_대기오염정보API
++한국환경공단_에어코리아_대기오염정보API
 
-Kakao Local API
+6.Kakao Local API
  
  
 API 호출 방식
