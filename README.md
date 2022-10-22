@@ -12,16 +12,18 @@
 2. Retrofit2
  
 3. Coroutine 
+
+4. OkHttp
  
-4. App Widgets
+5. App Widgets
  
-5. 공공 API
+6. 공공 API
  
 + 한국환경공단_에어코리아_측정소정보API
 
 + 한국환경공단_에어코리아_대기오염정보API
 
-6. Kakao Local API
+7. Kakao Local API
  
  
 ## API 호출 방식
@@ -42,6 +44,16 @@ TM좌표를 이용해서 내 주변 측정소 정보를 획득한 후 가까운 
  ## 상세 기능:
  
  
- ![Screenshot_20221007-181245_fineDust](https://user-images.githubusercontent.com/59818827/197322810-e6c7cbf0-fbd0-4f61-9839-e40e5f033058.jpg)
+<img src="https://user-images.githubusercontent.com/59818827/197322896-16537e46-6f6f-46be-bc67-349f89dfb279.jpg" width="366">
 
+대기 환경에 따라서 좋음,보통,나쁨,매우 나쁨으로 나뉘어 지고 거기에 따라서 배경색 과 이모지가 달라진다<br>
+|왼쪽 정렬|가운데 정렬|오른쪽 정렬| 
+|내용1|내용2|내용3| 
+|내용1|내용2|내용3| 
 
+**좋음** : 파랑색 배경에 ☺ <br>
+**보통** : 녹색 배경에 🙂 <br>
+**나쁨** : 노랑색 배경에 ☹ <br>
+**매우 나쁨** : 빨강색 배경에 😡<br>
+
+대기환경 정보는 한시간 간격 데이터를 받아서 유저에게 보여준다(ex 00시,01시,02시~24시)
