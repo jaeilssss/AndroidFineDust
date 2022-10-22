@@ -9,21 +9,21 @@
  
 사용기술 : 
  
-1.LocationManager(FusedLocationProviderClient)
+1. LocationManager(FusedLocationProviderClient)
  
-2.Retrofit2
+2. Retrofit2
  
-3.Coroutine 
+3. Coroutine 
  
-4.App Widgets
+4. App Widgets
  
-5.공공 API
+5. 공공 API
  
-+한국환경공단_에어코리아_측정소정보API
++ 한국환경공단_에어코리아_측정소정보API
 
-+한국환경공단_에어코리아_대기오염정보API
++ 한국환경공단_에어코리아_대기오염정보API
 
-6.Kakao Local API
+6. Kakao Local API
  
  
 API 호출 방식
