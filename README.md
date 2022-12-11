@@ -2,8 +2,9 @@
 # 우리동네 미세먼지
 *※ 본 프로젝트는 패스트 캠퍼스 안드로이드 강의를 참고하고 진행했습니다!*
 
-<img width="366"  alt="스크린샷 2021-08-16 오후 1 29 17" src="https://user-images.githubusercontent.com/59818827/129527170-e194ce7e-ab4c-4008-8a66-a9ac70992064.png">
-
+# Architecture
+<img width="800"  alt="스크린샷 2021-08-16 오후 1 29 17" src="https://user-images.githubusercontent.com/59818827/206915768-5653de80-9b25-4f20-b9c5-4683ba897145.png">
+*** 1번 -> 2번 -> 3번 순 호출<br>
  
 ## 사용기술 : 
  
